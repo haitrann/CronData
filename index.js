@@ -1,12 +1,12 @@
-require('./db');
+require('./service/db');
 
 const request = require('request');
 const cheerio = require('cheerio');
-const date_time_format = require('./date_time_format');
-const mongo_MU_news = require('./schema/news');
+const date_time_format = require('./service/date_time_format');
+const mongo_MU_news = require('./model/news');
 
 
-request('https://www.skysports.com/manchester-united-news',(error, response, html) => {
+request('https://giaoduc.net.vn/giao-duc-24h/khong-vuong-nghi-dinh-161-ha-noi-co-ly-do-gi-ma-khong-xet-dac-cach-giao-vien-post204414.gd', (error, response, html) => {
     if (!error && response.statusCode == 200) {
         const $ = cheerio.load(html);
 
@@ -26,8 +26,8 @@ request('https://www.skysports.com/manchester-united-news',(error, response, htm
 
             const date_time = date_time_format(time);
 
-            mongo_MU_news.create({date_time, title, data});
-            
+            mongo_MU_news.create({ date_time, title, data });
+
         });
     }
 });
