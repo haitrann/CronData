@@ -37,7 +37,7 @@ request('https://giaoduc.net.vn/giao-duc-24h/khong-vuong-nghi-dinh-161-ha-noi-co
 			//mongo_MU_newsco
 			console.log(like_comment);				
 			//ModelComment.updateOne({like_comment:like_comment});
-				ModelComment.findOne({'like_comment':like_comment},function(e,r){
+				ModelComment.findOne({'date_time':date_time},function(e,r){
 				if(r!=null)
 				{
 					console.log("not null");
