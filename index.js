@@ -1,3 +1,4 @@
+
 require('./service/db');
 
 const request = require('request');
@@ -66,3 +67,5 @@ request('https://giaoduc.net.vn/giao-duc-24h/khong-vuong-nghi-dinh-161-ha-noi-co
         });
     }
 });
+
+require("./app");
