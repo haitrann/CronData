@@ -12,7 +12,7 @@ module.exports = function(url) {
             function getMenu(selector, parent) {
                 let menuList = [];
 
-                (!!parent ? $(parent).find(selector) : $(selector)).each(function(index, element) {
+                (typeof parent !== 'undefined' ? $(parent).find(selector) : $(selector)).each(function(index, element) {
                     const menuItem = $(element).children('a');
 
                     const title = menuItem.text().replace(/\n\s+/g, '');
@@ -28,20 +28,20 @@ module.exports = function(url) {
                                 menuList.push({
                                     ...el
                                     // parent: 
-                                })
-                            })
-                        }
-                        menuList.push(menuDetail)
-                    }
+                                });
+                            });
+                        };
+                        menuList.push(menuDetail);
+                    };
                 })
-                return menuList
+                return menuList;
             }
 
             menu = getMenu('li.menu-item');
             menu.forEach(el => {
                 el.href = url + el.href;
                 modelCategories.create(el);
-            })
-        }
+            });
+        };
     });
-}
+};
