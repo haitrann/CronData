@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const SomeModelSchema = new Schema({
     _id: String,
     time: Date,
+    writer: String,
     header: String,
     content: String,
     picture: {

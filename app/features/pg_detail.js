@@ -12,11 +12,23 @@ module.exports = function(url) {
                 let header = '';
                 let content = '';
                 let picture = {};
+                let time = '';
+                let writer = {};
 
                 $(selector).each((index, element) => {
                     header = $(element).find('.details__summary.cms-desc').text();
                     $(element).find('.details__content.cms-body').each((i, el) => {
                         content += $(el).find('p').text();
+                    });
+
+                    $(element).find('.details__meta').each((i,el) => {
+                        time = $(el).find('time').text();
+                        // $(el).find('a').each((i,e) => {
+                        //     writer = {
+                        //         name: $(e).text(),
+                        //         href: $(e).attr('href')
+                        //     }
+                        // });
                     });
 
                     $(element).find('.picture').each((i, el) => {
@@ -30,12 +42,13 @@ module.exports = function(url) {
 
                 });
 
-                return {header,content,picture};
+                return { header,time,writer,content,picture };
             };
 
             const data = getData('.details');
+            // console.log({time: data.time.replace(/\n\s+/g,'')})
 
-            modelDetail.create({_id: url,...data});
+            // modelDetail.create({_id: url,...data});
         };
     });
 };
