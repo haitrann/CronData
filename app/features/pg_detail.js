@@ -1,6 +1,7 @@
 const request = require('request');
 const cheerio = require('cheerio');
 const modelDetail = require('../models/detail');
+const dateTimeFormat = require('../services/date_time_format')
 
 
 module.exports = function(url) {
@@ -11,7 +12,7 @@ module.exports = function(url) {
             function getData(selector) {
                 let header = '';
                 let content = '';
-                let picture = {};
+                let picture = [];
                 let time = '';
                 let writer = {};
 
@@ -21,23 +22,26 @@ module.exports = function(url) {
                         content += $(el).find('p').text();
                     });
 
-                    $(element).find('.details__meta').each((i,el) => {
-                        time = $(el).find('time').text();
-                        // $(el).find('a').each((i,e) => {
-                        //     writer = {
-                        //         name: $(e).text(),
-                        //         href: $(e).attr('href')
-                        //     }
-                        // });
+                    $(element).find('.details__meta .meta').each((i,el) => {
+                        const url = 'https://giaoduc.net.vn'
+                        const t = $(el).find('time').text().replace(/\n\s+/g,'');
+                        time = dateTimeFormat(t);
+                        $(el).find('a').each((i,e) => {
+                            writer = {
+                                name: $(e).text(),
+                                href: url + $(e).attr('href')
+                            }
+                        });
                     });
 
                     $(element).find('.picture').each((i, el) => {
                         const src = 'https:' + $(el).find('.pic img').attr('src');
-                        const cap = $(el).find('.caption').text();
-                        picture = {
+                        const cap = $(el).find('.caption').text().replace(/\n\s+/g,'');
+                        pic = {
                             image: src,
                             caption: cap
                         }
+                        picture.push(pic);
                     });
 
                 });
@@ -46,9 +50,8 @@ module.exports = function(url) {
             };
 
             const data = getData('.details');
-            // console.log({time: data.time.replace(/\n\s+/g,'')})
 
-            // modelDetail.create({_id: url,...data});
+            modelDetail.create({_id: url,...data});
         };
     });
 };

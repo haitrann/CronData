@@ -5,13 +5,16 @@ const Schema = mongoose.Schema;
 const SomeModelSchema = new Schema({
     _id: String,
     time: Date,
-    writer: String,
+    writer: {
+        name: String,
+        href: String
+    },
     header: String,
     content: String,
-    picture: {
+    picture: [{
         image: String,
         caption: String
-    }
+    }]
 });
 
 var detail = mongoose.model('Detail', SomeModelSchema);

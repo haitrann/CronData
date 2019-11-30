@@ -22,7 +22,6 @@ module.exports = function(url) {
             };
 
             const listContent = getData('.l-content article.story');
-            console.log(listContent.length)
             listContent.forEach(item => {
                 item.href = url + item.href;
                 modelListContent.create(item);

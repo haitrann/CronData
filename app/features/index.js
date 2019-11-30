@@ -5,4 +5,4 @@ const pageDetail = require('./pg_detail');
 
 // pageHome('https://giaoduc.net.vn');
 // pageListNews('https://giaoduc.net.vn/tin-hiep-hoi/451.gd');
-pageDetail('https://giaoduc.net.vn/tin-hiep-hoi/de-nghi-giam-sat-van-ban-duoi-luat-do-tong-lien-doan-lao-dong-viet-nam-ban-hanh-post204786.gd');
+pageDetail('https://giaoduc.net.vn/giao-duc-24h/thanh-lap-to-tu-van-ve-van-hoa--giao-duc-cho-thu-tuong-tai-sao-khong-post185199.gd');

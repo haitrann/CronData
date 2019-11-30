@@ -4,12 +4,14 @@ module.exports = (dateTime) => {
     const d = temp[0].split('/');
     const t = temp[1].split(':');
 
-    year = d[2];
-    month = d[1];
-    date = d[0];
+    let year = parseInt(d[2]);
 
-    hour = t[0];
-    min = t[1];
+    let month = parseInt(d[1])-1;
+
+    let date = parseInt(d[0]);
+
+    let hour = parseInt(t[0]);
+    let min = parseInt(t[1]);
 
     const format = new Date(year, month, date, hour, min);
     return format;
