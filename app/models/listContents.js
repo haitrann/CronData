@@ -3,8 +3,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const SomeModelSchema = new Schema({
+    _id: String,
     title: String,
-    href: String
+    href: String,
+    categoryId: String
 });
 
 var listContent = mongoose.model('List_Content', SomeModelSchema);

@@ -1,8 +1,30 @@
 // const pageHome = require('./pg_home');
-// const pageListNews = require('./pg_listContent');
-const pageDetail = require('./pg_detail');
-
-
 // pageHome('https://giaoduc.net.vn');
-// pageListNews('https://giaoduc.net.vn/tin-hiep-hoi/451.gd');
-pageDetail('https://giaoduc.net.vn/giao-duc-24h/thanh-lap-to-tu-van-ve-van-hoa--giao-duc-cho-thu-tuong-tai-sao-khong-post185199.gd');
+
+
+
+
+
+// https://giaoduc.net.vn/goc-nhin/o-my-ho-khong-muon-chung-toi-hoc-post199792.gd ------- link co reply comment
+
+
+
+
+//crawl trang list content
+
+// const listContents = require('./router');
+// listContents.crawlListContents();
+
+
+
+
+
+
+//crawl trang detail
+// const detail = require('./router');
+// detail.crawlPageDetail();
+
+
+//crawl comments
+const comment = require('./router');
+comment.crawlComments();

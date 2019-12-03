@@ -1,5 +1,6 @@
 const request = require('request');
 const cheerio = require('cheerio');
+const { encrypt } = require('../services/hash');
 const modelCategories = require('../models/categories');
 
 
@@ -20,7 +21,7 @@ module.exports = function(url) {
                     if ( title.length > 0 ) {
                         let menuDetail = {
                             title,
-                            href: menuItem.attr('href')
+                            href: url + menuItem.attr('href')
                         }
                         if ($(element).has('ul')) {
                             // menuDetail.children = getMenu(`${selector} ul li`, element)
@@ -31,7 +32,7 @@ module.exports = function(url) {
                                 });
                             });
                         };
-                        menuList.push(menuDetail);
+                        menuList.push({_id: encrypt(menuDetail.href), ...menuDetail});
                     };
                 })
                 return menuList;
@@ -39,9 +40,9 @@ module.exports = function(url) {
 
             menu = getMenu('li.menu-item');
             menu.forEach(el => {
-                el.href = url + el.href;
                 modelCategories.create(el);
-            });
+            })
+ 
         };
     });
 };

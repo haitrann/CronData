@@ -1,10 +1,11 @@
 const request = require('request');
 const cheerio = require('cheerio');
 const modelDetail = require('../models/detail');
+const getNumber = require('../services/getNumber');
 const dateTimeFormat = require('../services/date_time_format')
 
 
-module.exports = function(url) {
+module.exports = function(id,url) {
     request(url, (error, response, html) => {
         if (!error && response.statusCode == 200) {
             const $ = cheerio.load(html);
@@ -13,8 +14,9 @@ module.exports = function(url) {
                 let header = '';
                 let content = '';
                 let picture = [];
-                let time = '';
                 let writer = {};
+                let time = '';
+                let totalComment = '';
 
                 $(selector).each((index, element) => {
                     header = $(element).find('.details__summary.cms-desc').text();
@@ -22,17 +24,14 @@ module.exports = function(url) {
                         content += $(el).find('p').text();
                     });
 
-                    $(element).find('.details__meta .meta').each((i,el) => {
-                        const url = 'https://giaoduc.net.vn'
-                        const t = $(el).find('time').text().replace(/\n\s+/g,'');
-                        time = dateTimeFormat(t);
-                        $(el).find('a').each((i,e) => {
-                            writer = {
-                                name: $(e).text(),
-                                href: url + $(e).attr('href')
-                            }
-                        });
-                    });
+                    writer = {
+                        name: $(element).find('.details__meta .meta a').text(),
+                        href: 'https://giaoduc.net.vn' + $(element).find('.details__meta .meta a').attr('href')
+                    }
+
+                    time = dateTimeFormat($(element).find('.details__meta .meta time').text().replace(/\n\s+/g,'')); 
+
+                    totalComment = getNumber($(element).find('.details__meta .right').find('a').text());
 
                     $(element).find('.picture').each((i, el) => {
                         const src = 'https:' + $(el).find('.pic img').attr('src');
@@ -46,12 +45,12 @@ module.exports = function(url) {
 
                 });
 
-                return { header,time,writer,content,picture };
+                return { time,writer,header,content,picture,totalComment};
             };
 
             const data = getData('.details');
-
-            modelDetail.create({_id: url,...data});
+            console.log(a.push(data))
+            // modelDetail.create({...data, listContentId: id});
         };
     });
 };
