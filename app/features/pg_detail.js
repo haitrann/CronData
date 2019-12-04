@@ -49,8 +49,7 @@ module.exports = function(id,url) {
             };
 
             const data = getData('.details');
-            console.log(a.push(data))
-            // modelDetail.create({...data, listContentId: id});
+            modelDetail.create({...data, listContentId: id});
         };
     });
 };
