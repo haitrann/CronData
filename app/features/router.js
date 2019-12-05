@@ -11,9 +11,9 @@ const findPageHome = async () => {
 
 const crawlListContents = async () => {
     const data = await findPageHome();
-    data.forEach(el => {
-        pageListContents(el._id, el.href);
-    });
+    for (let i = 0; i < data.length; i++) {
+        await pageListContents(data[i]._id, data[i].href);
+    }
 };
 
 const findListContent = async () => {
@@ -23,9 +23,9 @@ const findListContent = async () => {
 
 const crawlPageDetail = async () => {
     const data = await findListContent();
-    data.forEach(el => {
-        pageDetail(el._id, el.href);
-    });
+    for (let i = 0; i < data.length; i++) {
+        await pageDetail(data[i]._id, data[i].href);
+    }
 };
 
 const crawlComments = async () => {

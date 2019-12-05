@@ -6,50 +6,53 @@ const dateTimeFormat = require('../services/date_time_format')
 
 
 module.exports = function(id,url) {
-    request(url, (error, response, html) => {
-        if (!error && response.statusCode == 200) {
-            const $ = cheerio.load(html);
+    return new Promise((resolve,reject) => {
+        request(url, (error, response, html) => {
+            if (!error && response.statusCode == 200) {
+                const $ = cheerio.load(html);
 
-            function getData(selector) {
-                let header = '';
-                let content = '';
-                let picture = [];
-                let writer = {};
-                let time = '';
-                let totalComment = '';
+                function getData(selector) {
+                    let header = '';
+                    let content = '';
+                    let picture = [];
+                    let writer = {};
+                    let time = '';
+                    let totalComment = '';
 
-                $(selector).each((index, element) => {
-                    header = $(element).find('.details__summary.cms-desc').text();
-                    $(element).find('.details__content.cms-body').each((i, el) => {
-                        content += $(el).find('p').text();
-                    });
+                    $(selector).each((index, element) => {
+                        header = $(element).find('.details__summary.cms-desc').text();
+                        $(element).find('.details__content.cms-body').each((i, el) => {
+                            content += $(el).find('p').text();
+                        });
 
-                    writer = {
-                        name: $(element).find('.details__meta .meta a').text(),
-                        href: 'https://giaoduc.net.vn' + $(element).find('.details__meta .meta a').attr('href')
-                    }
-
-                    time = dateTimeFormat($(element).find('.details__meta .meta time').text().replace(/\n\s+/g,'')); 
-
-                    totalComment = getNumber($(element).find('.details__meta .right').find('a').text());
-
-                    $(element).find('.picture').each((i, el) => {
-                        const src = 'https:' + $(el).find('.pic img').attr('src');
-                        const cap = $(el).find('.caption').text().replace(/\n\s+/g,'');
-                        pic = {
-                            image: src,
-                            caption: cap
+                        writer = {
+                            name: $(element).find('.details__meta .meta a').text(),
+                            href: 'https://giaoduc.net.vn' + $(element).find('.details__meta .meta a').attr('href')
                         }
-                        picture.push(pic);
+
+                        time = dateTimeFormat($(element).find('.details__meta .meta time').text().replace(/\n\s+/g,'')); 
+
+                        totalComment = getNumber($(element).find('.details__meta .right').find('a').text());
+
+                        $(element).find('.picture').each((i, el) => {
+                            const src = 'https:' + $(el).find('.pic img').attr('src');
+                            const cap = $(el).find('.caption').text().replace(/\n\s+/g,'');
+                            pic = {
+                                image: src,
+                                caption: cap
+                            }
+                            picture.push(pic);
+                        });
+
                     });
 
-                });
+                    return { time,writer,header,content,picture,totalComment };
+                };
 
-                return { time,writer,header,content,picture,totalComment};
+                const data = getData('.details');
+                modelDetail.create({...data, listContentId: id}).then( () => resolve() );
             };
-
-            const data = getData('.details');
-            modelDetail.create({...data, listContentId: id});
-        };
+        })
+    
     });
 };

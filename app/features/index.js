@@ -12,8 +12,8 @@
 
 //crawl trang list content
 
-// const listContents = require('./router');
-// listContents.crawlListContents();
+const listContents = require('./router');
+listContents.crawlListContents();
 
 
 
@@ -26,5 +26,5 @@
 
 
 //crawl comments
-const comment = require('./router');
-comment.crawlComments();
+// const comment = require('./router');
+// comment.crawlComments();
