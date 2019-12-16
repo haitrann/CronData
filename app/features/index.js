@@ -1,4 +1,4 @@
-// const pageHome = require('./pg_home');
+// const pageHome = require('./home/categories');
 // pageHome('https://giaoduc.net.vn');
 
 
@@ -12,19 +12,15 @@
 
 //crawl trang list content
 
-const listContents = require('./router');
-listContents.crawlListContents();
+// const listContents = require('./router');
+// listContents.crawlListContents();
 
 
 
+const detail = require('./post/index');
+detail.crawlPageDetailAndComment();
 
 
-
-//crawl trang detail
-// const detail = require('./router');
-// detail.crawlPageDetail();
-
-
-//crawl comments
-// const comment = require('./router');
-// comment.crawlComments();
+// crawl comments
+// const comment = require('./post/comment');
+// comment('123','https://giaoduc.net.vn/goc-nhin/o-my-ho-khong-muon-chung-toi-hoc-post199792.gd')

@@ -1,4 +1,4 @@
 module.exports = (data) => {
-    data.split(' ');
-    return data[0];
+    let arr = data.split(' ');
+    return arr[0];
 }
