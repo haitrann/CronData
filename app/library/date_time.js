@@ -1,5 +1,4 @@
-module.exports = (dateTime) => {
-    
+const isoFormat = (dateTime) => {
     const temp = dateTime.split(' ');
     const d = temp[0].split('/');
     const t = temp[1].split(':');
@@ -15,5 +14,15 @@ module.exports = (dateTime) => {
 
     const format = new Date(year, month, date, hour, min);
     return format;
-    
+};
+
+const getYear = (time) => {
+    date = new Date(time);
+    return date.getFullYear();
+}
+
+
+module.exports = {
+    isoFormat,
+    getYear
 };

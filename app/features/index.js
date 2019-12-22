@@ -1,3 +1,5 @@
+
+
 // const pageHome = require('./home/categories');
 // pageHome('https://giaoduc.net.vn');
 
@@ -17,10 +19,14 @@
 
 
 
-const detail = require('./post/index');
-detail.crawlPageDetailAndComment();
+// const detail = require('./post/index');
+// detail.crawlPageDetailAndComment();
 
 
 // crawl comments
 // const comment = require('./post/comment');
 // comment('123','https://giaoduc.net.vn/goc-nhin/o-my-ho-khong-muon-chung-toi-hoc-post199792.gd')
+
+const abc = require('./post/handling');
+// abc.crawlDetailAndCommentOfHighlight();
+abc.crawlDetailAndCommentOfTimeline();

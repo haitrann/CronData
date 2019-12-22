@@ -1,14 +1,15 @@
 const requestPromise = require('request-promise');
 const cheerio = require('cheerio');
 const base64 = require('base-64');
-const getNumber = require('../../services/getNumber');
-const dateTimeFormat = require('../../services/date_time_format');
+const getNumber = require('../../library/get_number');
+const dateTime = require('../../library/date_time');
 const modelPost = require('../../models/post');
 
 
 module.exports = async function(crawledUrlId, contentUrl) {
     let numComments;
     let encodedUrl;
+    let postDate;
     let options = {
         uri: contentUrl,
         transform: function (body) {
@@ -29,7 +30,7 @@ module.exports = async function(crawledUrlId, contentUrl) {
             const postedByUserUrl = 'https://giaoduc.net.vn' + contentHTML.find('.details__meta .meta a').attr('href');
 
             const strPostDate = contentHTML.find('.details__meta .meta time').text().replace(/\n\s+/g,'');
-            const postDate = dateTimeFormat(strPostDate);
+            postDate = dateTime.isoFormat(strPostDate);
 
 
             numComments = getNumber(contentHTML.find('.details__meta .right').find('a').text());
@@ -71,6 +72,7 @@ module.exports = async function(crawledUrlId, contentUrl) {
 
     return {
         numComments,
-        encodedUrl
+        encodedUrl,
+        postDate
     };
 };

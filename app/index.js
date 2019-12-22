@@ -1,2 +1,2 @@
-require('./services/database');
+require('./library/database');
 require('./features');
