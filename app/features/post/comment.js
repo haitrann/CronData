@@ -3,9 +3,9 @@ const cheerio = require('cheerio');
 const base64 = require('base-64');
 const getNumber = require('../../library/get_number');
 const dateTime = require('../../library/date_time');
-const modelComment = require('../../models/comment');
 
 module.exports = async function(encodedUrl, contentUrl) {
+    let array = [];
     let options = {
         uri: contentUrl,
         transform: function (body) {
@@ -15,7 +15,6 @@ module.exports = async function(encodedUrl, contentUrl) {
 
     await requestPromise(options)
         .then(function ($) {
-            let array = [];
             $('.cmt-item.primary-comment').each((index, element) => {
                 const info = $(element).find('.meta');
                 const username = $(info).find('h4').text();
@@ -35,12 +34,12 @@ module.exports = async function(encodedUrl, contentUrl) {
                     totalReact
                 });
                 $(element).nextAll('.cmt-item.secondary-comment').each((i,el) => {
-                    const repInfo = $(element).find('.meta');
+                    const repInfo = $(el).find('.meta');
                     const repUsername = $(repInfo).find('h4').text();
                     const repStrCommentDate = $(repInfo).find('time').text();
                     const repCommentDate = dateTime.isoFormat(repStrCommentDate);
-                    const repMessage = $(element).find('.comment').text().replace(/\n\s+/g, '');
-                    const repTotalReact = getNumber($(element).find('.cmt-like-btn').text().replace(/\n\s+/g, ''));
+                    const repMessage = $(el).find('.comment').text().replace(/\n\s+/g, '');
+                    const repTotalReact = getNumber($(el).find('.cmt-like-btn').text().replace(/\n\s+/g, ''));
                     const replyId = base64.encode(encodedUrl + strCommentDate);
                     array.push({
                         _id: replyId,
@@ -54,12 +53,10 @@ module.exports = async function(encodedUrl, contentUrl) {
                     });
                 });
             });
-
-            array.forEach(el => {
-                modelComment.create(el)
-            })
         })
         .catch(function (err) {
             if (err) throw err;
         });
+
+    return array;
 };

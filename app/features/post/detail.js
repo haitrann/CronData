@@ -3,13 +3,10 @@ const cheerio = require('cheerio');
 const base64 = require('base-64');
 const getNumber = require('../../library/get_number');
 const dateTime = require('../../library/date_time');
-const modelPost = require('../../models/post');
 
 
 module.exports = async function(crawledUrlId, contentUrl) {
-    let numComments;
-    let encodedUrl;
-    let postDate;
+    let detailObj = {};
     let options = {
         uri: contentUrl,
         transform: function (body) {
@@ -19,7 +16,6 @@ module.exports = async function(crawledUrlId, contentUrl) {
 
     await requestPromise(options)
         .then(function ($) {
-            let detailObj = {};
             const contentHTML = $('.details');
             const story = contentHTML.find('.details__summary.cms-desc').text();
             let message;
@@ -61,18 +57,11 @@ module.exports = async function(crawledUrlId, contentUrl) {
                 postedByUserName,
                 postedByUserUrl,
                 hashtags
-            }
-
-            modelPost.create(detailObj);
-
+            };
         })
         .catch(function (err) {
             if (err) throw err;
         });
 
-    return {
-        numComments,
-        encodedUrl,
-        postDate
-    };
+    return detailObj;
 };

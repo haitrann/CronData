@@ -1,2 +1,7 @@
 require('./library/database');
-require('./features');
+if (process.argv[2]) {
+    require('./features')[process.argv[2]]();
+}
+else {
+    require('./cronjob');
+}

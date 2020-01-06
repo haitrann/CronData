@@ -1,4 +1,5 @@
 const schedule = require('node-schedule');
+const features = require('../features');
 
 /*
 
@@ -14,3 +15,17 @@ const schedule = require('node-schedule');
 
 */
 
+const crawlCategories = schedule.scheduleJob('* * * */6 *', () => {
+    features.crawlCategories();
+    console.log('Crawling categories ...');
+});
+
+const crawlNew = schedule.scheduleJob('*/5 * * * *', () => {
+    features.crawlingNews();
+    console.log('Crawling latest news ...');
+});
+
+const updateCrawled = schedule.scheduleJob('*/5 * * * *', () => {
+    features.updateCrawled();
+    console.log('Update crawled ...');
+});

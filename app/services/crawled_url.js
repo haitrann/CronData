@@ -1,7 +1,7 @@
 const modelCrawledUrl = require('../models/crawled_url');
 
-const findModelCrawledUrl = async () => {
-    return await modelCrawledUrl.find().select('crawledUrlId, url').exec();
+const findModelCrawledUrl = () => {
+    return modelCrawledUrl.find().select('crawledUrlId url').exec();
 };
 
 module.exports = {

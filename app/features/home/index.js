@@ -1,1 +1,1 @@
-require('./categories');
+module.exports = require('./categories');
