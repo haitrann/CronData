@@ -29,3 +29,9 @@ const updateCrawled = schedule.scheduleJob('*/5 * * * *', () => {
     features.updateCrawled();
     console.log('Update crawled ...');
 });
+
+module.exports = {
+    crawlCategories,
+    crawlNew,
+    updateCrawled
+}
