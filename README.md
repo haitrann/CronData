@@ -1,17 +1,21 @@
 # CÁCH SETUP CRAWL DỮ LIỆU GIAODUC.NET.VN
 
-# Bước 1: 
+# Bước 1:
     npm install
 
 
 # Bước 2: 
-Thêm file .env với nội dung: LIMIT_YEAR={năm giới hạn}
+    Thêm file .env với nội dung: LIMIT_YEAR={năm giới hạn}
 	Ví dụ: LIMIT_YEAR=2018
 
 
-# Bước 3: 
-npm run paging
+# Bước 3:
+    npm run categories
 
 
 # Bước 4: 
-npm run dev
+    npm run paging
+
+
+# Bước 5: 
+    npm run dev
