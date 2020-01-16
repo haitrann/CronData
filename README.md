@@ -1,20 +1,17 @@
-# CronData
-đồ án mã nguồn mở, cron dữ liêu tự động từ 1 trang web
+# CÁCH SETUP CRAWL DỮ LIỆU GIAODUC.NET.VN
+
+# Bước 1: 
+    npm install
 
 
+# Bước 2: 
+Thêm file .env với nội dung: LIMIT_YEAR={năm giới hạn}
+	Ví dụ: LIMIT_YEAR=2018
 
-#Run code
 
-1. npm install
+# Bước 3: 
+npm run paging
 
-2. npm run dev
 
-#Run crawl paging
-
-1. npm run paging
-
-#File .env
-
-1. LIMIT_YEAR
-
-    *EX: LIMIT_YEAR=2018
+# Bước 4: 
+npm run dev
