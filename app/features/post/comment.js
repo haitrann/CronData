@@ -8,13 +8,13 @@ module.exports = async function(encodedUrl, contentUrl) {
     let array = [];
     let options = {
         uri: contentUrl,
-        transform: function (body) {
+        transform: function(body) {
             return cheerio.load(body);
         }
     };
 
     await requestPromise(options)
-        .then(function ($) {
+        .then(function($) {
             $('.cmt-item.primary-comment').each((index, element) => {
                 const info = $(element).find('.meta');
                 const username = $(info).find('h4').text();
@@ -23,9 +23,8 @@ module.exports = async function(encodedUrl, contentUrl) {
                 const message = $(element).find('.comment').text().replace(/\n\s+/g, '');
                 const totalReact = getNumber($(element).find('.cmt-like-btn').text().replace(/\n\s+/g, ''));
                 const unique = encodedUrl + strCommentDate;
-                const commentId = base64.encode(unique);
+                // const commentId = base64.encode(unique);
                 array.push({
-                    _id: commentId,
                     message,
                     username,
                     postId: encodedUrl,
@@ -33,16 +32,15 @@ module.exports = async function(encodedUrl, contentUrl) {
                     strCommentDate,
                     totalReact
                 });
-                $(element).nextAll('.cmt-item.secondary-comment').each((i,el) => {
+                $(element).nextAll('.cmt-item.secondary-comment').each((i, el) => {
                     const repInfo = $(el).find('.meta');
                     const repUsername = $(repInfo).find('h4').text();
                     const repStrCommentDate = $(repInfo).find('time').text();
                     const repCommentDate = dateTime.isoFormat(repStrCommentDate);
                     const repMessage = $(el).find('.comment').text().replace(/\n\s+/g, '');
                     const repTotalReact = getNumber($(el).find('.cmt-like-btn').text().replace(/\n\s+/g, ''));
-                    const replyId = base64.encode(encodedUrl + strCommentDate);
+                    // const replyId = base64.encode(encodedUrl + strCommentDate);
                     array.push({
-                        _id: replyId,
                         message: repMessage,
                         username: repUsername,
                         postId: encodedUrl,
@@ -54,7 +52,7 @@ module.exports = async function(encodedUrl, contentUrl) {
                 });
             });
         })
-        .catch(function (err) {
+        .catch(function(err) {
             if (err) throw err;
         });
 

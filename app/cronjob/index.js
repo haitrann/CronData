@@ -25,7 +25,7 @@ const crawlNew = schedule.scheduleJob('*/5 * * * *', () => {
     console.log('Crawling latest news ...');
 });
 
-const updateCrawled = schedule.scheduleJob('*/5 * * * *', () => {
+const updateCrawled = schedule.scheduleJob('*/10 * * * *', () => {
     features.updateCrawled();
     console.log('Update crawled ...');
 });
